@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-brand-blue: #4A90E2;
+  --color-brand-purple: #9013FE;
+  --color-brand-light: #F8FAFC;
+  --color-brand-dark: #0F172A;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased overflow-x-hidden;
+    background-image: 
+      radial-gradient(at 40% 20%, hsla(228,100%,74%,0.1) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsla(189,100%,56%,0.1) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(355,100%,93%,0.1) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight font-bold text-slate-900;
+  }
+}
+
+@layer components {
+  .glass-nav {
+    @apply bg-white/70 backdrop-blur-lg border-b border-white/50 shadow-[0_4px_30px_rgba(0,0,0,0.05)];
+  }
+
+  .glass-card, .grid-box {
+    @apply bg-white/60 backdrop-blur-md border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.04)] rounded-2xl transition-all duration-300;
+  }
+
+  .glass-card:hover, .grid-box:hover {
+    @apply bg-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.08)] -translate-y-1;
+  }
+
+  .grid-button {
+    @apply flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium shadow-lg shadow-blue-500/30 transition-all duration-300 hover:shadow-blue-500/50 hover:-translate-y-0.5;
+  }
+
+  .grid-button-alt {
+    @apply flex items-center justify-center gap-2 px-6 py-3 bg-white/80 backdrop-blur-sm text-slate-800 border border-slate-200 rounded-xl font-medium shadow-sm transition-all duration-300 hover:bg-white hover:shadow-md hover:-translate-y-0.5;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-500 to-blue-500;
+  }
+
+  .bg-gradient-premium {
+    @apply bg-gradient-to-br from-blue-50 via-white to-purple-50;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
