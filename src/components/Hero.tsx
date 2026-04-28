@@ -6,19 +6,37 @@ import { Link } from 'react-router-dom';
 const heroMedia = [
   {
     type: "image",
-    src: "/hero_slide_1.png",
+    src: "/six.png",
     title: "Digital Excellence",
     subtitle: "High-performance applications built with modern tools."
   },
   {
     type: "image",
-    src: "/hero_slide_2.png",
+    src: "/fifth.png",
     title: "Premium Interfaces",
     subtitle: "Creating immersive, scalable web platforms."
   },
   {
     type: "image",
-    src: "/hero_slide_3.png",
+    src: "/third.png",
+    title: "Global Reach",
+    subtitle: "Connecting brands with audiences worldwide."
+  },
+  {
+    type: "image",
+    src: "/first.png",
+    title: "Global Reach",
+    subtitle: "Connecting brands with audiences worldwide."
+  },
+  {
+    type: "image",
+    src: "/fifth.png",
+    title: "Global Reach",
+    subtitle: "Connecting brands with audiences worldwide."
+  },
+  {
+    type: "image",
+    src: "/six.png",
     title: "Global Reach",
     subtitle: "Connecting brands with audiences worldwide."
   }
