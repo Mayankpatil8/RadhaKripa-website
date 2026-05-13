@@ -6,6 +6,10 @@ import Services from '../components/Services';
 import FeaturedCaseStudy from '../components/FeaturedCaseStudy';
 import Portfolio from '../components/Portfolio';
 import Testimonials from '../components/Testimonials';
+import WorkingOn from '../components/WorkingOn';
+import TechStack from '../components/TechStack';
+import AIPoweredSolutions from '../components/AIPoweredSolutions';
+import Insights from '../components/Insights';
 import CTA from '../components/CTA';
 
 export default function Home() {
@@ -14,10 +18,14 @@ export default function Home() {
       <Hero />
       <ClientLogos />
       <OurThinking />
+      <WorkingOn />
       {/* <Services /> */}
-      <FeaturedCaseStudy />
+      {/* <FeaturedCaseStudy /> */}
+      <TechStack />
+      <AIPoweredSolutions />
       {/* <Portfolio /> */}
       <Testimonials />
+      {/* <Insights /> */}
       <CTA />
     </div>
   );

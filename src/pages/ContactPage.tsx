@@ -11,9 +11,7 @@ export default function ContactPage() {
         image="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&q=80&w=2070"
         label="Contact Us"
       />
-      <div className="bg-[#FCFBF8] border-b-2 border-[#2D241F]">
-        <Contact />
-      </div>
+      <Contact />
     </>
   );
 }

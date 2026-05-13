@@ -10,12 +10,15 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-3 mb-6 group">
-              <img 
-                src="/logo.png" 
-                alt="Radhekripa Web Developer Logo" 
-                className="h-14 object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-              />
+            <Link to="/" className="flex items-center gap-3 mb-4 group">
+              <div className="flex items-center">
+                <img
+                  src="/logo@@.png"
+                  alt="Radhekripa Web Developer Logo"
+                  style={{ mixBlendMode: 'screen' }}
+                  className="h-20 object-contain drop-shadow-[0_0_18px_rgba(99,102,241,0.6)] group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed mb-8">
               Building premium digital experiences that elevate brands and drive growth. Your vision, our expertise.
@@ -60,9 +63,9 @@ export default function Footer() {
             <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Newsletter</h4>
             <p className="text-slate-400 text-sm mb-6">Subscribe to our newsletter for the latest insights.</p>
             <form className="flex relative" onSubmit={e => e.preventDefault()}>
-              <input 
-                type="email" 
-                placeholder="Email Address" 
+              <input
+                type="email"
+                placeholder="Email Address"
                 className="w-full bg-white/5 border border-white/10 rounded-full pl-6 pr-24 py-3 focus:outline-none focus:border-blue-500 focus:bg-white/10 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.1)] text-sm transition-all text-white font-medium placeholder-slate-500"
               />
               <button className="absolute right-1 top-1 bottom-1 bg-white/10 text-white px-6 rounded-full text-sm font-medium hover:bg-blue-500 transition-colors">

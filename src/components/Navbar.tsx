@@ -12,7 +12,7 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -29,34 +29,59 @@ export default function Navbar() {
     { name: 'Portfolio', href: '/portfolio' },
   ];
 
+  const isHomePage = location.pathname === '/';
+
+  // Navbar background logic:
+  // - Scrolled (any page): dark glass
+  // - Home page at top: fully transparent
+  // - Inner pages at top: white/light so logo is visible
+  const navBg = isScrolled
+    ? 'bg-slate-950/80 backdrop-blur-xl border-b border-white/5 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.1)]'
+    : isHomePage
+      ? 'bg-transparent py-5'
+      : 'bg-black backdrop-blur-md border-b border-white/10 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.4)]';
+
+  const navPillBg = isScrolled
+    ? 'bg-white/5 border-white/10'
+    : isHomePage
+      ? 'bg-slate-900/90 border-slate-800'
+      : 'bg-white/5 border-white/10';
+
+  const linkColor = (isActive: boolean) => {
+    if (isActive) return 'text-blue-400';
+    if (isScrolled) return 'text-slate-300 hover:text-white';
+    if (isHomePage) return 'text-slate-300 hover:text-white';
+    return 'text-slate-300 hover:text-white';
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-slate-950/80 backdrop-blur-xl border-b border-white/5 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.1)]' : 'bg-transparent py-5'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${navBg}`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <img
-            src="/logo.png"
-            alt="Radhekripa Web Developer Logo"
-            className={`transition-all duration-300 ${isScrolled ? 'h-12' : 'h-15'} object-contain`}
-          />
+          <div className={`flex items-center transition-all duration-300 ${isScrolled ? 'py-1' : isHomePage ? 'py-1' : 'py-1'}`}>
+            <img
+              src="/logo@@.png"
+              alt="Radhekripa Web Developer Logo"
+              style={{ mixBlendMode: 'screen' }}
+              className={`transition-all duration-300 object-contain drop-shadow-[0_0_12px_rgba(99,102,241,0.5)] ${isScrolled ? 'h-14' : isHomePage ? 'h-16' : 'h-14'
+                }`}
+            />
+          </div>
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          <div className={`flex items-center gap-8 px-6 py-2 rounded-full border transition-all duration-300 shadow-sm backdrop-blur-md ${isScrolled ? 'bg-white/5 border-white/10' : 'bg-slate-900/90 border-slate-800 text-white'}`}>
+          <div className={`flex items-center gap-8 px-6 py-2 rounded-full border transition-all duration-300 shadow-sm backdrop-blur-md ${navPillBg}`}>
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
-                className={`text-sm font-medium transition-colors relative group ${location.pathname === link.href
-                  ? (isScrolled ? 'text-blue-400' : 'text-blue-400')
-                  : (isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-300 hover:text-white')
-                  }`}
+                className={`text-sm font-medium transition-colors relative group ${linkColor(location.pathname === link.href)}`}
               >
                 {link.name}
                 {location.pathname === link.href && (
@@ -75,7 +100,8 @@ export default function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className={`md:hidden p-2 transition-colors ${isScrolled ? 'text-white' : 'text-slate-900'}`}
+          className={`md:hidden p-2 transition-colors ${isScrolled ? 'text-white' : isHomePage ? 'text-slate-200' : 'text-white'
+            }`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -115,4 +141,3 @@ export default function Navbar() {
     </motion.nav>
   );
 }
-

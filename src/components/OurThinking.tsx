@@ -21,10 +21,10 @@ export default function OurThinking() {
             >
               <div className="inline-flex items-center gap-2 text-blue-600 text-sm font-bold tracking-wider uppercase mb-6">
                 <span className="w-8 h-px bg-blue-600"></span>
-                Our Thinking
+                Our Approach
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-[1.1] mb-6">
-                The philosophy behind our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">success.</span>
+                Strategy-first <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">development.</span>
               </h2>
               <Link to="/about" className="inline-flex items-center gap-3 text-sm font-bold uppercase tracking-wider text-slate-600 hover:text-blue-600 transition-colors group mt-4">
                 <span className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center group-hover:border-blue-600 transition-colors">
@@ -42,9 +42,9 @@ export default function OurThinking() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Design is not just what it looks like.</h3>
+              <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Performance-driven design.</h3>
               <p className="text-lg text-slate-600 leading-relaxed font-medium">
-                We believe that premium design is fundamentally about how a product works. Our process strips away the unnecessary, focusing deeply on user psychology, fluid interactions, and flawless performance. It's about engineering trust at first glance.
+                We believe that premium design is fundamentally about how a product works and converts. Our process strips away the unnecessary, focusing deeply on user psychology, fluid interactions, and flawless performance to ensure your digital platform drives measurable business impact.
               </p>
             </motion.div>
 
@@ -54,9 +54,9 @@ export default function OurThinking() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Scale through systems.</h3>
+              <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Scalable architecture & Long-term partnerships.</h3>
               <p className="text-lg text-slate-600 leading-relaxed font-medium mb-8">
-                Every project we build is backed by a robust design system and scalable architecture. We don't just solve today's problems; we anticipate your brand's evolution, ensuring your digital presence remains powerful and adaptable for years to come.
+                Every project we build is backed by a robust design system and scalable enterprise-grade architecture. We don't just act as a vendor; we adopt a long-term partnership mindset to continuously optimize and scale your digital presence as your brand evolves globally.
               </p>
               
               {/* Image grid */}
