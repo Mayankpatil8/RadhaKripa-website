@@ -80,7 +80,7 @@ export default function WorkingOn() {
     <section className="py-32 bg-slate-900 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-900 to-slate-900" />
 
-      <div className="max-w-screen-2xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Header */}
         <div className="mb-16">
           <div className="inline-flex items-center gap-2 text-blue-400 text-sm font-bold tracking-wider uppercase mb-4">
@@ -107,8 +107,8 @@ export default function WorkingOn() {
               key={idx}
               onClick={() => setActive(idx)}
               className={`flex items-center gap-3 px-5 py-3 rounded-full text-sm font-bold transition-all duration-300 border ${active === idx
-                  ? 'bg-blue-600 border-blue-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                  : 'bg-slate-800 border-white/5 text-slate-300 hover:border-blue-500/40 hover:text-white'
+                ? 'bg-blue-600 border-blue-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                : 'bg-slate-800 border-white/5 text-slate-300 hover:border-blue-500/40 hover:text-white'
                 }`}
             >
               <span className="text-xl leading-none">{c.flag}</span>
@@ -127,38 +127,39 @@ export default function WorkingOn() {
             transition={{ duration: 0.35, ease: 'easeOut' }}
             className="grid lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden border border-white/5 shadow-2xl"
           >
-            {/* Image side */}
-            <div className="relative h-72 lg:h-auto overflow-hidden">
+            {/* Image side — fixed height thumbnail */}
+            <div className="relative overflow-hidden" style={{ maxHeight: '340px', minHeight: '220px' }}>
               <img
                 src={clients[active].image}
                 alt={clients[active].title}
-                className="w-full h-full object-cover scale-105"
+                className="w-full h-full object-cover object-top scale-[1.02]"
+                style={{ minHeight: '220px', maxHeight: '340px' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-900/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent" />
 
               {/* Country badge */}
-              <div className="absolute top-6 left-6 flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
-                <span className="text-xl">{clients[active].flag}</span>
+              <div className="absolute top-5 left-5 flex items-center gap-2 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                <span className="text-lg">{clients[active].flag}</span>
                 <span className="text-white font-bold text-sm">{clients[active].country}</span>
               </div>
             </div>
 
             {/* Content side */}
-            <div className="bg-slate-800/80 backdrop-blur-xl p-8 md:p-12 flex flex-col">
+            <div className="bg-slate-800/80 backdrop-blur-xl p-7 md:p-9 flex flex-col">
               <div className="flex items-center justify-between mb-6">
                 <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full">
                   {clients[active].category}
                 </span>
                 <span className={`flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full ${clients[active].status === 'In Progress'
-                    ? 'text-green-400 bg-green-500/10 border border-green-500/20'
-                    : clients[active].status === 'Completed'
-                      ? 'text-blue-400 bg-blue-500/10 border border-blue-500/20'
-                      : 'text-amber-400 bg-amber-500/10 border border-amber-500/20'
+                  ? 'text-green-400 bg-green-500/10 border border-green-500/20'
+                  : clients[active].status === 'Completed'
+                    ? 'text-blue-400 bg-blue-500/10 border border-blue-500/20'
+                    : 'text-amber-400 bg-amber-500/10 border border-amber-500/20'
                   }`}>
                   <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${clients[active].status === 'In Progress' ? 'bg-green-400'
-                      : clients[active].status === 'Completed' ? 'bg-blue-400'
-                        : 'bg-amber-400'
+                    : clients[active].status === 'Completed' ? 'bg-blue-400'
+                      : 'bg-amber-400'
                     }`} />
                   {clients[active].status}
                 </span>
