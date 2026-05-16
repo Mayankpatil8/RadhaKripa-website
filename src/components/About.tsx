@@ -96,11 +96,11 @@ const stats = [
     icon: Trophy, gradient: 'from-amber-500 to-orange-600',
   },
   {
-    value: '250+', label: 'Projects Delivered', sub: 'Across e-commerce, SaaS & corporate',
+    value: '100+', label: 'Projects Delivered', sub: 'Across e-commerce, SaaS & corporate',
     icon: Code2, gradient: 'from-blue-500 to-indigo-600',
   },
   {
-    value: '50+', label: 'Global Clients', sub: 'India, EU, USA, UAE and beyond',
+    value: '20+', label: 'Global Clients', sub: 'India, EU, USA, UAE and beyond',
     icon: Globe, gradient: 'from-emerald-500 to-teal-600',
   },
   {

@@ -27,15 +27,13 @@ export default function Footer() {
               <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors text-slate-300 shadow-sm border border-white/10">
                 <Twitter size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors text-slate-300 shadow-sm border border-white/10">
+              <a href="https://www.linkedin.com/company/radhekripa-web-developer/?viewAsMember=true" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors text-slate-300 shadow-sm border border-white/10">
                 <Linkedin size={18} />
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors text-slate-300 shadow-sm border border-white/10">
                 <Instagram size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors text-slate-300 shadow-sm border border-white/10">
-                <Github size={18} />
-              </a>
+
             </div>
           </div>
 

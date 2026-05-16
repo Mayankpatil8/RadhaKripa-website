@@ -1,165 +1,272 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ExternalLink } from 'lucide-react';
 
-const projects = [
-  {
-    id: 1,
-    title: 'Microcraft',
-    category: 'Websites',
-    image: '/portfolio_1_1777291133011.png',
-    height: 'h-[400px]',
-    link: 'https://microcraft.in/',
-    problem: 'Outdated digital presence failing to capture enterprise leads.',
-    solution: 'Built a high-performance React application with modern architecture.',
-    result: 'Increased B2B lead generation by 45%.'
-  },
-  {
-    id: 2,
-    title: 'Eurocore Global',
-    category: 'Websites',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
-    height: 'h-[300px]',
-    link: 'https://eurocoreglobal.com/',
-    problem: 'Slow loading times affecting global search rankings.',
-    solution: 'Optimized frontend delivery and implemented edge caching.',
-    result: 'Achieved 98/100 Core Web Vitals score.'
-  },
-  {
-    id: 3,
-    title: 'Indo Euro Hub',
-    category: 'Websites',
-    image: '/portfolio_2_1777291172081.png',
-    height: 'h-[500px]',
-    link: 'https://indoeurohub.netlify.app/',
-    problem: 'Complex navigation structure confusing international users.',
-    solution: 'Redesigned UX/UI with intuitive global navigation systems.',
-    result: 'Reduced bounce rate by 30%.'
-  },
-  {
-    id: 4,
-    title: 'Lumina Fashion',
-    category: 'E-commerce',
-    image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800',
-    height: 'h-[350px]',
-    link: '#',
-    problem: 'High cart abandonment due to clunky checkout process.',
-    solution: 'Implemented frictionless one-page checkout via Shopify API.',
-    result: 'Boosted conversion rates by 22%.'
-  },
-  {
-    id: 5,
-    title: 'HealthTech Platform',
-    category: 'UI Design',
-    image: 'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&q=80&w=800',
-    height: 'h-[400px]',
-    link: '#',
-    problem: 'Legacy interface causing user fatigue in medical staff.',
-    solution: 'Created a minimalist, accessible design system tailored for healthcare.',
-    result: 'Improved daily active usage by 60%.'
-  },
-  {
-    id: 6,
-    title: 'Creative Agency',
-    category: 'Websites',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
-    height: 'h-[300px]',
-    link: '#',
-    problem: 'Lack of visual impact in their online portfolio.',
-    solution: 'Developed a WebGL-powered interactive gallery.',
-    result: 'Increased average session duration by 2x.'
-  }
+const allProjects = [
+  { id: 1, title: 'Microcraft',                       category: 'Web Development', image: '/portfolio1.png',  link: 'https://microcraft.in/' },
+  { id: 2, title: 'Eurocore Global',                   category: 'Web Development', image: 'portfolio2.png',   link: 'https://eurocoreglobal.com/' },
+  { id: 3, title: 'Indo Euro Hub',                     category: 'E-commerce',      image: 'portfolio3.png',   link: 'https://indoeurohub.netlify.app/' },
+  { id: 4, title: 'Iskcon Temple Pune',                category: 'UI / UX Design',  image: '/portfolio5.png',  link: 'https://iskconweb.netlify.app/' },
+  { id: 5, title: 'MarketPlace Platform',              category: 'E-commerce',      image: '/portfolio4.png',  link: 'https://marketpalce1.netlify.app/' },
+  { id: 6, title: 'Road Accident Severity Prediction', category: 'AIML',            image: 'portfolio6.png',   link: 'https://roadsafetyy.netlify.app/' },
+  // Load More
+  { id: 7, title: 'Kadambari Bhojnalaya',             category: 'UI Design',       image: '/portfolio7.png',  link: 'https://kadambaribhojnalaya.netlify.app/' },
+  { id: 8, title: 'Anant Coaching Classes',            category: 'UI Design',       image: 'portfolio8.png',   link: 'https://eloquent-otter-523e02.netlify.app/' },
+  { id: 9, title: 'Juice Lover',                       category: 'Brand Identity',  image: 'portfolio9.png',   link: 'https://juicelover.netlify.app/' },
 ];
 
-const categories = ['All', 'Websites', 'E-commerce', 'UI Design', 'Mobile App'];
+const INITIAL_COUNT = 6;
+const categories = ['All', 'AIML', 'Web Development', 'E-commerce', 'UI Design', 'Brand Identity'];
+
+// Category accent colours
+const categoryColor: Record<string, string> = {
+  'Web Development': '#3b82f6',
+  'E-commerce':      '#10b981',
+  'UI / UX Design':  '#8b5cf6',
+  'UI Design':       '#8b5cf6',
+  'AIML':            '#f59e0b',
+  'Brand Identity':  '#ec4899',
+};
+
+const containerVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.96 },
+  show:   { opacity: 1, y: 0,  scale: 1,   transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+  exit:   { opacity: 0, y: 20, scale: 0.95, transition: { duration: 0.35 } },
+};
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+  const [loading, setLoading] = useState(false);
 
-  const filteredProjects = projects.filter(
+  const filteredProjects = allProjects.filter(
     proj => activeCategory === 'All' || proj.category === activeCategory
   );
+  const visibleProjects = filteredProjects.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredProjects.length;
+
+  const handleLoadMore = () => {
+    setLoading(true);
+    setTimeout(() => { setVisibleCount(p => p + 3); setLoading(false); }, 500);
+  };
+
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat);
+    setVisibleCount(INITIAL_COUNT);
+  };
 
   return (
-    <section id="portfolio" className="py-32 bg-white relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 text-blue-600 text-sm font-bold tracking-wider uppercase mb-4">
-              <span className="w-8 h-px bg-blue-600"></span>
-              Selected Work
+    <section id="portfolio" className="py-28 bg-white relative overflow-hidden">
+
+      {/* Top gradient rule */}
+      <div
+        className="absolute top-0 inset-x-0 h-[2px]"
+        style={{ background: 'linear-gradient(90deg, transparent 5%, #3b82f6 35%, #8b5cf6 65%, transparent 95%)' }}
+      />
+
+      {/* Faint grid watermark */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage: 'repeating-linear-gradient(0deg,#64748b 0,#64748b 1px,transparent 1px,transparent 64px), repeating-linear-gradient(90deg,#64748b 0,#64748b 1px,transparent 1px,transparent 64px)',
+        }}
+      />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+
+        {/* ── Header ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-16"
+        >
+          <div>
+            <div className="inline-flex items-center gap-3 mb-4">
+              <span className="w-10 h-[2px] rounded-full" style={{ background: 'linear-gradient(90deg,#3b82f6,#8b5cf6)' }} />
+              <span className="text-[11px] font-black tracking-[0.22em] uppercase text-blue-600">Selected Work</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
-              Crafted with precision,<br/>built for <span className="text-gradient">impact.</span>
+            <h2 className="text-5xl md:text-6xl font-black text-slate-900 leading-[1.08] tracking-tight">
+              Crafted with precision,<br />
+              built for{' '}
+              <span style={{ background: 'linear-gradient(90deg,#3b82f6,#8b5cf6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                impact.
+              </span>
             </h2>
+            <p className="mt-5 text-slate-500 text-base max-w-lg leading-relaxed">
+              A curated showcase of digital experiences built for ambitious brands — from AI to e-commerce.
+            </p>
           </div>
-          
-          <div className="flex flex-wrap gap-2">
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
-                  activeCategory === cat 
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30' 
-                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
 
-        <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
-          <AnimatePresence>
-            {filteredProjects.map((project) => (
-              <motion.a
-                href={project.link}
-                target={project.link !== '#' ? "_blank" : "_self"}
-                rel={project.link !== '#' ? "noopener noreferrer" : ""}
-                layout
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                key={project.id}
-                className={`group relative rounded-3xl overflow-hidden cursor-pointer bg-slate-100 break-inside-avoid shadow-sm hover:shadow-xl hover:shadow-blue-500/10 transition-shadow duration-500 ${project.height} block`}
-              >
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
-                />
-                
-                {/* Glassmorphism Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                  <div className="text-blue-300 text-xs font-bold tracking-widest uppercase mb-2">{project.category}</div>
-                  <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                  
-                  {project.problem && (
-                    <div className="mb-4 space-y-1.5 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-100">
-                      <p className="text-xs text-slate-300 leading-tight"><strong className="text-white">Problem:</strong> {project.problem}</p>
-                      <p className="text-xs text-slate-300 leading-tight"><strong className="text-white">Solution:</strong> {project.solution}</p>
-                      <p className="text-xs text-blue-400 font-semibold leading-tight"><strong className="text-white">Result:</strong> {project.result}</p>
+          {/* Filter pills */}
+          <div className="flex flex-wrap gap-2 lg:justify-end">
+            {categories.map(cat => {
+              const active = activeCategory === cat;
+              return (
+                <motion.button
+                  key={cat}
+                  onClick={() => handleCategoryChange(cat)}
+                  whileTap={{ scale: 0.94 }}
+                  className="px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-300"
+                  style={
+                    active
+                      ? { background: 'linear-gradient(135deg,#3b82f6,#8b5cf6)', color: '#fff', boxShadow: '0 4px 20px rgba(99,102,241,0.35)' }
+                      : { background: '#f8fafc', color: '#64748b', border: '1.5px solid #e2e8f0' }
+                  }
+                >
+                  {cat}
+                </motion.button>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* ── Animated Grid ── */}
+        <motion.div
+          layout
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+        >
+          <AnimatePresence mode="popLayout">
+            {visibleProjects.map((project) => {
+              const accentColor = categoryColor[project.category] ?? '#3b82f6';
+              return (
+                <motion.div
+                  key={project.id}
+                  layout
+                  variants={cardVariants}
+                  exit="exit"
+                  className="group relative flex flex-col rounded-2xl overflow-hidden cursor-pointer"
+                  style={{
+                    border: '1.5px solid #eef2f8',
+                    boxShadow: '0 4px 24px rgba(15,23,42,0.07)',
+                    background: '#fff',
+                  }}
+                  whileHover={{ y: -6, boxShadow: `0 20px 48px rgba(15,23,42,0.13), 0 0 0 2px ${accentColor}28` }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+                >
+                  {/* ── Image (always full) ── */}
+                  <div className="relative overflow-hidden flex-shrink-0">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-auto block transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.035]"
+                    />
+
+                    {/* Hover veil — icon only, NO text */}
+                    <motion.div
+                      className="absolute inset-0 flex items-center justify-center"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      style={{ background: 'rgba(8,12,28,0.42)', backdropFilter: 'blur(1px)' }}
+                    >
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="flex items-center justify-center w-[60px] h-[60px] rounded-full transition-transform duration-300 hover:scale-110"
+                        style={{
+                          background: 'rgba(255,255,255,0.15)',
+                          border: '1.5px solid rgba(255,255,255,0.45)',
+                          backdropFilter: 'blur(16px)',
+                          boxShadow: `0 0 40px ${accentColor}66`,
+                        }}
+                      >
+                        <ExternalLink size={22} color="#fff" />
+                      </a>
+                    </motion.div>
+
+                    {/* Accent corner tag */}
+                    <div
+                      className="absolute top-3.5 left-3.5 text-[9px] font-black tracking-[0.18em] uppercase px-2.5 py-1 rounded-full"
+                      style={{
+                        background: `${accentColor}18`,
+                        color: accentColor,
+                        border: `1px solid ${accentColor}33`,
+                        backdropFilter: 'blur(8px)',
+                      }}
+                    >
+                      {project.category}
                     </div>
-                  )}
-
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full font-medium text-white text-sm hover:bg-white hover:text-slate-900 transition-colors w-max mt-auto">
-                    View Live Site <ArrowUpRight size={16} />
                   </div>
-                </div>
-              </motion.a>
-            ))}
+
+                  {/* ── Card footer ── */}
+                  <div
+                    className="flex items-center justify-between gap-3 px-5 py-4"
+                    style={{ borderTop: '1px solid #f0f4fb' }}
+                  >
+                    <div className="min-w-0">
+                      <h3 className="text-[14.5px] font-bold text-slate-800 leading-snug truncate">
+                        {project.title}
+                      </h3>
+                    </div>
+
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                      style={{
+                        background: `linear-gradient(135deg, ${accentColor}, #8b5cf6)`,
+                        boxShadow: `0 4px 14px ${accentColor}44`,
+                      }}
+                    >
+                      <ArrowUpRight size={15} color="#fff" />
+                    </a>
+                  </div>
+
+                  {/* Bottom accent bar (slides in on hover) */}
+                  <div
+                    className="absolute bottom-0 left-0 h-[3px] w-0 group-hover:w-full transition-all duration-500 ease-out rounded-b-2xl"
+                    style={{ background: `linear-gradient(90deg, ${accentColor}, #8b5cf6)` }}
+                  />
+                </motion.div>
+              );
+            })}
           </AnimatePresence>
         </motion.div>
 
-        <div className="mt-20 text-center">
-           <button className="grid-button-alt inline-flex mx-auto">
-              Load More Projects
-           </button>
+        {/* ── Load More / Done ── */}
+        <div className="mt-16 flex justify-center">
+          {hasMore ? (
+            <motion.button
+              onClick={handleLoadMore}
+              disabled={loading}
+              whileHover={!loading ? { scale: 1.04 } : {}}
+              whileTap={!loading ? { scale: 0.97 } : {}}
+              className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-sm transition-all duration-300"
+              style={
+                loading
+                  ? { background: '#f1f5f9', color: '#94a3b8', border: '1.5px solid #e2e8f0' }
+                  : { background: 'linear-gradient(135deg,#3b82f6,#8b5cf6)', color: '#fff', boxShadow: '0 8px 32px rgba(99,102,241,0.32)' }
+              }
+            >
+              {loading ? (
+                <>
+                  <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                  </svg>
+                  Loading…
+                </>
+              ) : 'Load More Projects'}
+            </motion.button>
+          ) : (
+            filteredProjects.length > INITIAL_COUNT && (
+              <div className="inline-flex items-center gap-2.5 text-sm font-semibold text-slate-400 px-6 py-3 rounded-full border border-slate-100 bg-slate-50">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                All projects loaded
+              </div>
+            )
+          )}
         </div>
       </div>
     </section>
