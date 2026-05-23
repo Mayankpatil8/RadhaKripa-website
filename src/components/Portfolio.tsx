@@ -5,7 +5,7 @@ import { ArrowUpRight, ExternalLink } from 'lucide-react';
 const allProjects = [
   { id: 1, title: 'Microcraft',                       category: 'Web Development', image: '/portfolio1.png',  link: 'https://microcraft.in/' },
   { id: 2, title: 'Eurocore Global',                   category: 'Web Development', image: 'portfolio2.png',   link: 'https://eurocoreglobal.com/' },
-  { id: 3, title: 'Indo Euro Hub',                     category: 'E-commerce',      image: 'portfolio3.png',   link: 'https://indoeurohub.netlify.app/' },
+  { id: 3, title: 'Indo Euro Hub',                     category: 'E-commerce',      image: 'portfolio3.png',   link: 'https://indoeurocore.com/' },
   { id: 4, title: 'Iskcon Temple Pune',                category: 'UI / UX Design',  image: '/portfolio5.png',  link: 'https://iskconweb.netlify.app/' },
   { id: 5, title: 'MarketPlace Platform',              category: 'E-commerce',      image: '/portfolio4.png',  link: 'https://marketpalce1.netlify.app/' },
   { id: 6, title: 'Road Accident Severity Prediction', category: 'AIML',            image: 'portfolio6.png',   link: 'https://roadsafetyy.netlify.app/' },
